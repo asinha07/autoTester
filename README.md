@@ -16,3 +16,19 @@ List of APIs:
                     "otherDomainLinks":[]
                    }
                 }```
+
+2. Get Performance of all the resources in the WebPage:
+       ``` Request Type: GET
+        Request path: /getPerformanceMap
+        QueryParameter: url
+        QueryValue: Complete URL with the protocol
+        Response: 
+                {
+                  "resourcePerformanceMap":[
+                    {
+                      "timeTake" : duration taken for loading the resource,
+                      "resourceType": "Type of resource => js/script/img",
+                      "resourceUrl" : "Location from where resource is being loaded"
+                    }
+                  ]
+                }```
