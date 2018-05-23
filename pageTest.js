@@ -81,6 +81,7 @@ async function checkResourcePerformance(url){
     })
     let response = {};
     response.resourcePerformanceMap = returnArray;
+    browser.close();
     return response;
 }
 
