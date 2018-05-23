@@ -2,7 +2,9 @@ const puppeteer = require('puppeteer');
 async function testPageUrls(url){
     console.log(url);
     const result = {};
-    let browser = await puppeteer.launch();
+    let browser = await puppeteer.launch({
+        ignoreHTTPSErrors : true
+    });
     let page = await browser.newPage();
     const response = await page.goto(url);
     let l = await page.evaluate((() => {
@@ -63,7 +65,9 @@ async function getInvalidUrls(urls,browser){
 
 async function checkResourcePerformance(url){
     console.log(url);
-    let browser = await puppeteer.launch();
+    let browser = await puppeteer.launch({
+        ignoreHTTPSErrors : true
+    });
     let page = await browser.newPage();
     await page.goto(url);
     let returnArray = await page.evaluate(() => {
