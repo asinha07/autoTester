@@ -3,7 +3,13 @@ const page = require('./pageTest');
 const router  = express.Router();
 
 router.get('/getUrls', function (req,res){
-    page.testLvpPage(req.query.url).then(function(response){
+    page.testPageUrls(req.query.url).then(function(response){
+        res.send(response);
+    })
+});
+
+router.get('/getPerformanceMap', function (req,res){
+    page.checkResourcePerformance(req.query.url).then(function(response){
         res.send(response);
     })
 });

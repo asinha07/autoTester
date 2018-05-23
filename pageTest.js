@@ -1,10 +1,9 @@
 const puppeteer = require('puppeteer');
-async function testLvpPage(url){
+async function testPageUrls(url){
     console.log(url);
     const result = {};
     let browser = await puppeteer.launch();
     let page = await browser.newPage();
-    await page.setViewport({width: 1200, height: 900});
     const response = await page.goto(url);
     let l = await page.evaluate((() => {
         let linksObject = {};
@@ -62,6 +61,30 @@ async function getInvalidUrls(urls,browser){
     return urlsResponse;
 }
 
+async function checkResourcePerformance(url){
+    console.log(url);
+    let browser = await puppeteer.launch();
+    let page = await browser.newPage();
+    await page.goto(url);
+    let returnArray = await page.evaluate(() => {
+        let returnArray = [];
+        let performanceMap = window.performance.getEntriesByType('resource');
+        console.log(performanceMap);
+        for(var i=0; i<performanceMap.length; i++){
+            let responseObj = {};
+            responseObj.timeTake = performanceMap[i].duration;
+            responseObj.resourceType = performanceMap[i].initiatorType;
+            responseObj.resourceUrl = performanceMap[i].name;
+            returnArray.push(responseObj);
+        }
+        return returnArray;
+    })
+    let response = {};
+    response.resourcePerformanceMap = returnArray;
+    return response;
+}
+
 module.exports = {
-    testLvpPage : testLvpPage
+    testPageUrls : testPageUrls,
+    checkResourcePerformance : checkResourcePerformance
 }
